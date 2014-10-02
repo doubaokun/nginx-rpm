@@ -44,10 +44,10 @@ Requires(pre): pwdutils
 
 # end of distribution specific definitions
 
-Summary: High performance web server
+Summary: High performance web server, with some modules patched in
 Name: nginx
 Version: 1.6.2
-Release: 2%{?dist}.ngx
+Release: 3%{?dist}.ngx
 Vendor: nginx inc.
 URL: http://nginx.org/
 
@@ -126,6 +126,7 @@ Not stripped version of nginx built with the debugging log support.
         --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
+	--with-http_image_filter_module \
         --with-mail \
         --with-mail_ssl_module \
         --with-file-aio \
@@ -169,6 +170,7 @@ make %{?_smp_mflags}
         --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
+	--with-http_image_filter_module \
         --with-mail \
         --with-mail_ssl_module \
         --with-file-aio \
