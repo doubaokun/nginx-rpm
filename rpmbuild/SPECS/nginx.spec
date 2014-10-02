@@ -47,7 +47,7 @@ Requires(pre): pwdutils
 Summary: High performance web server, with some modules patched in
 Name: nginx
 Version: 1.6.2
-Release: 3%{?dist}.ngx
+Release: 4%{?dist}.ngx
 Vendor: nginx inc.
 URL: http://nginx.org/
 
@@ -65,6 +65,7 @@ Source10: lua-nginx-module.tar.gz
 Source11: echo-nginx-module.tar.gz
 Source13: ngx_http_trim_filter_module.tar.gz
 Source14: headers-more-nginx-module.tar.gz
+Source15: nginx_oboe-latest.x86_64.tar.gz
 
 License: 2-clause BSD-like license
 
@@ -96,8 +97,11 @@ Not stripped version of nginx built with the debugging log support.
 %setup -T -D -a 13
 %{__tar} zxvf %{SOURCE14}
 %setup -T -D -a 14
+%{__tar} zxvf %{SOURCE15}
+%setup -T -D -a 15
 
 %build
+MOD_PAGESPEED_DIR=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/pagespeed-mirror/src \
 ./configure \
         --prefix=%{_sysconfdir}/nginx \
         --sbin-path=%{_sbindir}/nginx \
@@ -130,7 +134,6 @@ Not stripped version of nginx built with the debugging log support.
         --with-mail \
         --with-mail_ssl_module \
         --with-file-aio \
-        --with-ipv6 \
         --with-debug \
         %{?with_spdy:--with-http_spdy_module} \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
@@ -138,6 +141,8 @@ Not stripped version of nginx built with the debugging log support.
 	--add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
 	--add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
 	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
+	--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe \
+	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/ngx_pagespeed \
         $*
 make %{?_smp_mflags}
 %{__mv} %{_builddir}/%{name}-%{version}/objs/nginx \
@@ -174,13 +179,15 @@ make %{?_smp_mflags}
         --with-mail \
         --with-mail_ssl_module \
         --with-file-aio \
-        --with-ipv6 \
+	--with-debug \
         %{?with_spdy:--with-http_spdy_module} \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
         --add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
         --add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
         --add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
 	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
+	--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe \
+	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/ngx_pagespeed \
         $*
 make %{?_smp_mflags}
 
