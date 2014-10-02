@@ -4,6 +4,7 @@
 .bashrc
 .ssh/
 .viminfo
-rpmbuild/BUILD/
-rpmbuild/SRPMS/
-rpmbuild/RPMS/
+.gitconfig
+rpmbuild/BUILD/*
+rpmbuild/SRPMS/*
+rpmbuild/RPMS/*
