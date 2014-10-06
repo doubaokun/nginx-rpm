@@ -1,0 +1,1 @@
+%_topdir %(echo $HOME)/nginx-rpm/rpmbuild
