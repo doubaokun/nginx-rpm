@@ -110,8 +110,8 @@ Not stripped version of nginx built with the debugging log support.
 %setup -T -D -a 17
 
 %build
-MOD_PAGESPEED_DIR=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/pagespeed-mirror/src \
 ./configure \
+        --with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc \
         --prefix=%{_sysconfdir}/nginx \
         --sbin-path=%{_sbindir}/nginx \
         --conf-path=%{_sysconfdir}/nginx/nginx.conf \
@@ -147,7 +147,7 @@ MOD_PAGESPEED_DIR=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/pagespeed-mirr
         --with-ipv6 \
         --with-http_v2_module \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
-    	--add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
+    	--add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.10.6 \
     	--add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
     	--add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
     	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
@@ -161,6 +161,7 @@ make %{?_smp_mflags}
 %{__mv} %{_builddir}/%{name}-%{version}/objs/nginx \
         %{_builddir}/%{name}-%{version}/objs/nginx.debug
 ./configure \
+        --with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc \
         --prefix=%{_sysconfdir}/nginx \
         --sbin-path=%{_sbindir}/nginx \
         --conf-path=%{_sysconfdir}/nginx/nginx.conf \
@@ -196,7 +197,7 @@ make %{?_smp_mflags}
         --with-ipv6 \
         --with-http_v2_module \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
-        --add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
+        --add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.10.6 \
         --add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
         --add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
     	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
