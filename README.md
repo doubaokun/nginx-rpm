@@ -1,6 +1,9 @@
 nginx-rpm
 =========
 
+
+Updated to 1.10.2
+
 Nginx 1.6.2 patched with the following modules:
 
     --with-http_image_filter_module \
