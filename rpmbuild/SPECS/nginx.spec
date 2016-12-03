@@ -268,7 +268,6 @@ make %{?_smp_mflags}
 
 %files
 %defattr(-,root,root)
-
 %{_sbindir}/nginx
 
 %dir %{_sysconfdir}/nginx
