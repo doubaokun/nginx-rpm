@@ -19,6 +19,8 @@ Nginx 1.6.2 patched with the following modules:
     mv .rpmmacros ../.rpmmacros
     sudo yum -y install rpm-build
     sudo yum -y install openssl-devel zlib-devel pcre-devel gcc lua-devel gd-devel liboboe-devel
+    #Or
+    yum-builddep ~/nginx-rpm/rpmbuild/SPECS/nginx.spec
     rpmbuild -ba ~/nginx-rpm/rpmbuild/SPECS/nginx.spec
 
     cd /home/bruce/nginx-rpm/rpmbuild/RPMS/x86_64

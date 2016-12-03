@@ -22,7 +22,7 @@ Requires: initscripts >= 8.36
 Requires(post): chkconfig
 Requires: openssl >= 1.0.1
 BuildRequires: openssl-devel >= 1.0.1
-%define with_spdy 1
+%define with_spdy 0
 %endif
 
 %if 0%{?rhel}  == 7
@@ -33,7 +33,7 @@ Requires: openssl >= 1.0.1
 BuildRequires: systemd
 BuildRequires: openssl-devel >= 1.0.1
 Epoch: 1
-%define with_spdy 1
+%define with_spdy 0
 %endif
 
 %if 0%{?suse_version}
@@ -74,6 +74,9 @@ License: 2-clause BSD-like license
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
+BuildRequires: lua-devel
+BuildRequires: gd-devel
+BuildRequires: openssl-devel
 
 Provides: webserver
 
@@ -142,7 +145,7 @@ MOD_PAGESPEED_DIR=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/pagespeed-mirr
         --with-file-aio \
         --with-debug \
         --with-ipv6 \
-        %{?with_spdy:--with-http_spdy_module} \
+        --with-http_v2_module \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     	--add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
     	--add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
@@ -191,7 +194,7 @@ make %{?_smp_mflags}
         --with-file-aio \
 	    --with-debug \
         --with-ipv6 \
-        %{?with_spdy:--with-http_spdy_module} \
+        --with-http_v2_module \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
         --add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
         --add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
