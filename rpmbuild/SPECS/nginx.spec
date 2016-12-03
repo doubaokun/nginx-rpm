@@ -46,7 +46,7 @@ Requires(pre): pwdutils
 
 Summary: High performance web server, with some modules patched in
 Name: nginx
-Version: 1.6.2
+Version: 1.10.2
 Release: 4%{?dist}.ngx
 Vendor: nginx inc.
 URL: http://nginx.org/
@@ -65,7 +65,9 @@ Source10: lua-nginx-module.tar.gz
 Source11: echo-nginx-module.tar.gz
 Source13: ngx_http_trim_filter_module.tar.gz
 Source14: headers-more-nginx-module.tar.gz
-Source15: nginx_oboe-latest.x86_64.tar.gz
+Source15: ngx_cache_purge.2.3.tar.gz
+Source16: ngx_txid.tar.gz
+Source17: ngx_pagespeed-1.11.33.4.tar.gz
 
 License: 2-clause BSD-like license
 
@@ -99,6 +101,10 @@ Not stripped version of nginx built with the debugging log support.
 %setup -T -D -a 14
 %{__tar} zxvf %{SOURCE15}
 %setup -T -D -a 15
+%{__tar} zxvf %{SOURCE16}
+%setup -T -D -a 16
+%{__tar} zxvf %{SOURCE17}
+%setup -T -D -a 17
 
 %build
 MOD_PAGESPEED_DIR=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/pagespeed-mirror/src \
@@ -130,19 +136,23 @@ MOD_PAGESPEED_DIR=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/pagespeed-mirr
         --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
-	--with-http_image_filter_module \
+	    --with-http_image_filter_module \
         --with-mail \
         --with-mail_ssl_module \
         --with-file-aio \
         --with-debug \
+        --with-ipv6 \
         %{?with_spdy:--with-http_spdy_module} \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
-	--add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
-	--add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
-	--add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
-	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
-	--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe \
-	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/ngx_pagespeed \
+    	--add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
+    	--add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
+    	--add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
+    	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
+        --add-module=%{_builddir}/%{name}-%{version}/ngx_cache_purge-2.3 \
+        --add-module=%{_builddir}/%{name}-%{version}/ngx_txid \
+        --add-module=%{_builddir}/%{name}-%{version}/ngx_pagespeed-latest-stable \
+    	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe \
+    	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/ngx_pagespeed \
         $*
 make %{?_smp_mflags}
 %{__mv} %{_builddir}/%{name}-%{version}/objs/nginx \
@@ -175,19 +185,23 @@ make %{?_smp_mflags}
         --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
-	--with-http_image_filter_module \
+        --with-http_image_filter_module \
         --with-mail \
         --with-mail_ssl_module \
         --with-file-aio \
-	--with-debug \
+	    --with-debug \
+        --with-ipv6 \
         %{?with_spdy:--with-http_spdy_module} \
         --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
         --add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
         --add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
         --add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
-	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
-	--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe \
-	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/ngx_pagespeed \
+    	--add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
+        --add-module=%{_builddir}/%{name}-%{version}/ngx_cache_purge-2.3 \
+        --add-module=%{_builddir}/%{name}-%{version}/ngx_txid \
+        --add-module=%{_builddir}/%{name}-%{version}/ngx_pagespeed-latest-stable \
+    	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe \
+    	#--add-module=%{_builddir}/%{name}-%{version}/nginx_oboe/psol/ngx_pagespeed \
         $*
 make %{?_smp_mflags}
 
