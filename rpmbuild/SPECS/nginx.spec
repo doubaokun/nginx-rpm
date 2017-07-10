@@ -111,7 +111,7 @@ Not stripped version of nginx built with the debugging log support.
 
 %build
 ./configure \
-        --with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc \
+        --with-cc=/opt/rh/devtoolset-4/root/usr/bin/gcc \
         --prefix=%{_sysconfdir}/nginx \
         --sbin-path=%{_sbindir}/nginx \
         --conf-path=%{_sysconfdir}/nginx/nginx.conf \
@@ -161,7 +161,7 @@ make %{?_smp_mflags}
 %{__mv} %{_builddir}/%{name}-%{version}/objs/nginx \
         %{_builddir}/%{name}-%{version}/objs/nginx.debug
 ./configure \
-        --with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc \
+        --with-cc=/opt/rh/devtoolset-4/root/usr/bin/gcc \
         --prefix=%{_sysconfdir}/nginx \
         --sbin-path=%{_sbindir}/nginx \
         --conf-path=%{_sysconfdir}/nginx/nginx.conf \
