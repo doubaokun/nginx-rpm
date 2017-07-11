@@ -1,18 +1,42 @@
 nginx-rpm
 =========
 
-For CentOS 7
-
-Nginx updated to 1.10.2
+Nginx For CentOS 7
 
 Nginx 1.10.2 patched with the following modules:
 
 ``` bash
+
+--with-http_ssl_module \
+--with-http_realip_module \
+--with-http_addition_module \
+--with-http_sub_module \
+--with-http_dav_module \
+--with-http_flv_module \
+--with-http_mp4_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_random_index_module \
+--with-http_secure_link_module \
+--with-http_stub_status_module \
+--with-http_auth_request_module \
 --with-http_image_filter_module \
---add-module=%{_builddir}/%{name}-%{version}/lua-nginx-module-0.9.12 \
---add-module=%{_builddir}/%{name}-%{version}/echo-nginx-module-0.56 \
---add-module=%{_builddir}/%{name}-%{version}/ngx_http_trim_filter_module \
---add-module=%{_builddir}/%{name}-%{version}/headers-more-nginx-module-0.25 \
+--with-mail \
+--with-mail_ssl_module \
+--with-file-aio \
+--with-debug \
+--with-ipv6 \
+--with-http_v2_module
+
+# Exteranl modules
+
+lua-nginx-module-0.10.6
+echo-nginx-module-0.56
+ngx_http_trim_filter_module
+headers-more-nginx-module-0.25
+ngx_cache_purge-2.3
+ngx_txid
+ngx_pagespeed-latest-stable
 ```
 
 ``` bash
@@ -21,10 +45,10 @@ cd ~/nginx-rpm
 mv .rpmmacros ../.rpmmacros
 yum -y install rpm-build
 yum -y install openssl-devel zlib-devel pcre-devel gcc lua-devel gd-devel
-#Or
-yum-builddep ~/nginx-rpm/rpmbuild/SPECS/nginx.spec
 
-rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
+# or
+#yum-builddep ~/nginx-rpm/rpmbuild/SPECS/nginx.spec
+
 yum install centos-release-scl
 yum install devtoolset-4-gcc*
 scl enable devtoolset-4 bash
@@ -42,5 +66,5 @@ rm -rf ngx_pagespeed-latest-stable
 rpmbuild -ba ~/nginx-rpm/rpmbuild/SPECS/nginx.spec
 
 cd ~/nginx-rpm/rpmbuild/RPMS/x86_64
-yum install ./nginx-1.6.2-1.el6.ngx.x86_64.rpm
+yum -y install ./nginx-1.10.2-4.el7.centos.ngx.x86_64.rpm
 ```

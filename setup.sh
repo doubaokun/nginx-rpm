@@ -30,4 +30,4 @@ rm -rf ngx_pagespeed-latest-stable
 rpmbuild -ba ~/nginx-rpm/rpmbuild/SPECS/nginx.spec
 
 cd ~/nginx-rpm/rpmbuild/RPMS/x86_64
-yum install ./nginx-1.6.2-1.el7.ngx.x86_64.rpm
+yum -y install ./nginx-1.10.2-4.el7.centos.ngx.x86_64.rpm
